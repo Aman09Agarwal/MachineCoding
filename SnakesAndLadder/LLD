@@ -1,0 +1,56 @@
+class Dice {
+    int noOfDice;
+    int rollDice();
+}
+
+class Jumper {
+    int start;
+    int end;
+}
+
+class Snake extends Jumper {
+    // validate start>end in constructor
+}
+
+class Ladder extends Jumper {
+    // validate start<end in constructor
+}
+
+class Player {
+    String id;
+    String name;
+}
+
+class GameBoard {
+    int boardSize;
+    Queue<Player> nextTurn;
+    List<Jumper> snakes;
+    List<Jumper> ladders;
+    Dice dice;
+    Map<String, Integer> playerCurrentPosition;
+
+    void startGame() {
+        //  get Player from nextTurn
+        //  fetch player's current position
+        //  roll dice
+        //  calculate next position
+        //  if next position>boardSize -> add player to nextTurn queue
+        //  if next pos == boardSize -> end game and declare the player as winner
+        //  else call continue game -> continueGame(player, next position)
+    }
+
+    private void continueGame(Player player, int nextPosition) {
+        //  call checkBittenBySnake
+        //  call checkForLadder
+        //  check if next Position == boardSize -> end game and declare the player as winner
+        //  else add player's new position in map, add player to nextTurn queue
+    }
+
+    private int checkBittenBySnake(int nextPosition)    //  check in the snakes if nextPosition is equal to start
+
+    private int checkForLadder(int nextPosition);   //  check in the ladders if nextPosition is equal to start
+}
+
+
+
+

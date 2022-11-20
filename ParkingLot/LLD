@@ -1,0 +1,44 @@
+enum VehicleCategory {
+    2W, SEDAN, HATCHBACK, SUV, BUS;
+}
+
+enum ParkingSlotCategory {
+    2W(10), COMPACT(20), MEDIUM(35), HEAVY_VEHICLE(50);
+    int price;
+}
+
+class Address {
+    String name; String city; String country;
+}
+
+class Vehicle {
+    String vehicleNumber; VehicleCategory vehicleCategory;
+}
+
+class Ticket {
+    String ticketNumber; long entryTime; long exitTime; Vehicle vehicle; ParkingSlot parkingSlot;
+    Ticket createTicket(Vehicle vehicle, ParkingSlot parkingSlot);
+}
+
+class ParkingSlot {
+    String slotNumber; ParkingSlotCategory parkingSlotCategory; boolean isAvailable; Vehicle vehicle;
+    addVehicle(Vehicle vehicle);
+    removeVehicle();
+}
+
+class ParkingFloor {
+    int floorNumber; Map<ParkingSlotCategory, Map<String, ParkingSlot>> parkingSlotMap;
+    ParkingSlot getRelevantParkingSlotForVehicleAndPark(Vehicle vehicle);
+    private ParkingSlotCategory pickCorrectSlotType(VehicleCategory vehicleCategory);
+}
+
+class ParkingLot {
+    String name; Address address; List<ParkingFloor> parkingFloors; private static volatile ParkingLot parkingLot;
+    ParkingLot getInstance();
+    void addFloor(ParkingFloor parkingFloor);
+    void removeFloor(ParkingFloor parkingFloor);
+    private ParkingSlot getParkingSlotForVehicleAndPark(Vehicle vehicle);
+    private Ticket createTicket(Vehicle vehicle, ParkingSlot parkingSlot);
+    Ticket assignTicket(Vehicle vehicle);
+    double scanAndPay(Ticket ticket);
+}
