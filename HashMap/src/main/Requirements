@@ -1,0 +1,11 @@
+DEFAULT SIZE = 16
+size of hashmap should be to power of 2 to minimize the collision
+Maximum size can be 2^30
+
+LOAD FACTOR = if the hashtable is filled 75% of its capacity then we resize the table.
+say, initial_cap = 2^4 = 16 and if table has 12 data. Then we will resize the table capacity to 2^5 = 32.
+
+COLLISION
+treeify_threshold - 8 (default in java8) - so when the linked list size becomes 8 then this linked list is converted to balanced binary tree.
+This is done to optimize search time, linked list (O(N)) and balanced binary tree (O(logN)).
+

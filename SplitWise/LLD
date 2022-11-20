@@ -1,0 +1,90 @@
+enum ExpenseType {
+    EXACT, EQUAL, PERCENT;
+}
+
+class User {
+    UUID id; String name; String phone; String email;
+}
+
+abstract class Split {
+    User borrower; double amount;
+}
+
+class EqualSplit extends Split {
+    public EqualSplit(User user) {
+        this.borrower = user;
+    }
+}
+
+class ExactSplit extends Split {
+    public EqualSplit(User user, double amount) {
+        this.borrower = user;
+        this.amount = amount;
+    }
+}
+
+class PercentSplit extends Split {
+    double percent;
+    public PercentSplit(User user, double percent) {
+        this.borrower = user;
+        this.percent = percent;
+    }
+}
+
+abstract class Expense {
+    String id; User lender; double amount; List<Split> splits; ExpenseDetails expenseDetails;
+    abstract boolean validate();
+}
+
+class EqualExpense extends Expense {
+    public EqualExpense(User user, double amount, List<Split> splits, ExpenseDetails expenseDetails) {
+        super(user, amount, splits, expenseDetails);
+    }
+    validate(); // check if split is instance of EqualSplit class
+}
+
+class ExactExpense extends Expense {
+    public EqualExpense(User user, double amount, List<Split> splits, ExpenseDetails expenseDetails) {
+        super(user, amount, splits, expenseDetails);
+    }
+    validate(); // check if split is instance of ExactSplit class, and totalAmount = sum of all split amount
+}
+
+class PercentExpense extends Expense {
+    public EqualExpense(User user, double amount, List<Split> splits, ExpenseDetails expenseDetails) {
+        super(user, amount, splits, expenseDetails);
+    }
+    validate(); // check if split is instance of PercentSplit class, and sum of all split percent = 100%
+}
+
+class ExpenseDetails {
+    String details;
+}
+
+class ExpenseRepository {
+    List<Expense> expenses;
+    Map<String, User> userMap;
+    Map<String, Map<String, double>> balanceSheet;
+
+    void addUser(User user);    // add new user to the userMap
+    User getUser(String userId);    //  fetch user from userMap
+    void addExpense(ExpenseType expenseType, double amount, User lender, List<Split> splits, ExpenseDetails expenseDetails);  // call createExpense, add expense in list and update balance sheet for both lender and borrower
+    private String checkSign(User user1, User user2, double amount);
+    List<String> getBalance(String userId); // get balanceSheet of that user
+    List<String> getAllBalance();   // get balance of all user user
+}
+
+class UserService {
+    void addUser(User user);    // call ExpenseRepository
+    User getUser(String userId);    //  call ExpenseRepository
+}
+
+class ExpenseService {
+    Expense createExpense(ExpenseType expenseType, double amount, User lender, List<Split> splits, ExpenseDetails expenseDetails);   // return Expense class based on expense type
+}
+
+class SplitWiseService {
+    void addExpense(ExpenseType expenseType, double amount, User lender, List<Split> splits, ExpenseDetails expenseDetails);  // call ExpenseRepository
+    void getBalance(String userId); // call ExpenseRepository
+    void getAllBalance();   // call ExpenseRepository
+}
